@@ -4,7 +4,7 @@ DEBUG = true
 
 class RSGen < Thor
 
-  desc "html [filename]", "create a new html file"
+  desc "html [-e] [filename]", "Create a new html file"
   option :empty, :type => :boolean, :aliases => "-e"
   def html(filename = 'index')
     if options[:empty]
@@ -25,10 +25,30 @@ class RSGen < Thor
     create_html_file(filename, content)
   end
 
+  desc "js [filename]", "Create a new js file"
+  def js(filename = 'main')
+    create_js_file(filename)
+  end
+
+  desc "css [filename]", "Create a new css file"
+  def css(filename = 'style')
+    create_css_file(filename)
+  end
+
   private
 
   def create_html_file(filename, content = nil)
     path = generate_path(filename, 'html')
+    create_file(path, content)
+  end
+
+  def create_js_file(filename, content = nil)
+    path = generate_path(filename, 'js')
+    create_file(path, content)
+  end
+
+  def create_css_file(filename, content = nil)
+    path = generate_path(filename, 'css')
     create_file(path, content)
   end
 
